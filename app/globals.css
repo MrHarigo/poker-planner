@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+:root {
+  /* Poker table green palette */
+  --poker-green-dark: #0d3320;
+  --poker-green: #1a5c3a;
+  --poker-green-light: #2d8a5a;
+  --poker-felt: #1e4d2b;
+  
+  /* Gold accents */
+  --gold: #d4af37;
+  --gold-light: #f4d03f;
+  --gold-dark: #b8941f;
+  
+  /* Card colors */
+  --card-red: #dc2626;
+  --card-black: #1f2937;
+  
+  /* Background layers */
+  --bg-darkest: #0a0f0d;
+  --bg-dark: #111916;
+  --bg-card: #1a2420;
+  --bg-card-hover: #243028;
+  
+  /* Text */
+  --text-primary: #f0f7f4;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  
+  /* Borders */
+  --border-subtle: #2d3a33;
+  --border-accent: #3d5a48;
+  
+  /* Status colors */
+  --status-can: #22c55e;
+  --status-maybe: #eab308;
+  --status-unavailable: #6b7280;
+  --status-preferred: #d4af37;
+  --status-playable: #60a5fa;
+  --status-wont-play: #ef4444;
+}
+
+@theme inline {
+  --color-poker-green-dark: var(--poker-green-dark);
+  --color-poker-green: var(--poker-green);
+  --color-poker-green-light: var(--poker-green-light);
+  --color-poker-felt: var(--poker-felt);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-bg-darkest: var(--bg-darkest);
+  --color-bg-dark: var(--bg-dark);
+  --color-bg-card: var(--bg-card);
+  --color-bg-card-hover: var(--bg-card-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-accent: var(--border-accent);
+  --color-status-can: var(--status-can);
+  --color-status-maybe: var(--status-maybe);
+  --color-status-unavailable: var(--status-unavailable);
+  --color-status-preferred: var(--status-preferred);
+  --color-status-playable: var(--status-playable);
+  --color-status-wont-play: var(--status-wont-play);
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg-darkest) 0%, var(--bg-dark) 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* Card suit symbols */
+.suit-spade::before { content: "♠"; color: var(--card-black); }
+.suit-heart::before { content: "♥"; color: var(--card-red); }
+.suit-diamond::before { content: "♦"; color: var(--card-red); }
+.suit-club::before { content: "♣"; color: var(--card-black); }
+
+/* Poker chip animation */
+@keyframes chip-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+.chip-spin {
+  animation: chip-spin 2s ease-in-out infinite;
+}
+
+/* Glow effect for buttons */
+.glow-gold {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.glow-gold:hover {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--poker-green-light);
+}
+
+/* Input focus states */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+/* Button transitions */
+button, a {
+  transition: all 0.2s ease;
+}
+
+/* Card pattern background */
+.pattern-felt {
+  background-image: 
+    radial-gradient(ellipse at center, var(--poker-felt) 0%, var(--poker-green-dark) 100%);
+}
+
+/* Selection styles */
+::selection {
+  background: var(--gold);
+  color: var(--bg-darkest);
+}

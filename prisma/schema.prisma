@@ -1,0 +1,49 @@
+// Prisma schema for Poker Planner
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  passcode  String   @unique
+  name      String?  // Admin-only label to identify player
+  nickname  String?  // Player-set display name
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  responses GameResponse[]
+}
+
+model Game {
+  id           String   @id @default(cuid())
+  gameCode     String   @unique
+  name         String
+  rateOptions  String   // JSON array: ["25-50", "50-100", "100-200"]
+  daySchedules String   // JSON array: [{ date: "2024-12-06", startHour: 18, endHour: 5 }, ...]
+  isVisible    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  responses GameResponse[]
+}
+
+model GameResponse {
+  id              String   @id @default(cuid())
+  gameId          String
+  playerId        String
+  ratePreferences String   // JSON: { "25-50": "preferred", "50-100": "playable" }
+  timeSlots       String   // JSON: { "2024-12-06T18:00": "can", "2024-12-06T19:00": "maybe" }
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, playerId])
+}
